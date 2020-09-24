@@ -1,5 +1,6 @@
 package com.astro.yourchannel.ui
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,14 +11,20 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class YtViewModel(
-    val repository: YtRepository
+    private val repository: YtRepository
 ) : ViewModel(){
-
+    private val TAG = "YtViewModel"
+    
     val playlistsLiveData : MutableLiveData<YtResource<YtPlaylistsResponse>> = MutableLiveData()
+
+    init {
+        getPlaylists()
+    }
 
     fun getPlaylists() = viewModelScope.launch {
         playlistsLiveData.postValue(YtResource.Loading())
         val response  = repository.getPlaylists()
+        Log.d(TAG, "getPlaylists: ${response.body()}")
         playlistsLiveData.postValue(handlePlaylistsResponse(response))
     }
 
