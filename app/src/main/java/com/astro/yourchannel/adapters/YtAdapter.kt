@@ -1,16 +1,23 @@
 package com.astro.yourchannel.adapters
 
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.astro.yourchannel.PlaylistItemActivity
 import com.astro.yourchannel.R
 import com.astro.yourchannel.models.playlists.PlaylistsItem1
 import kotlinx.android.synthetic.main.main_row.view.*
 
-class YtAdapter : RecyclerView.Adapter<YtAdapter.YtViewHolder>() {
+class YtAdapter(mContext : Context) : RecyclerView.Adapter<YtAdapter.YtViewHolder>() {
+
+    private val TAG = "YtAdapter"
+    private val mContext = mContext
 
     inner class YtViewHolder( itemView : View) : RecyclerView.ViewHolder(itemView)
 
@@ -39,6 +46,14 @@ class YtAdapter : RecyclerView.Adapter<YtAdapter.YtViewHolder>() {
             tvOverline.text = currentItem.snippet.publishedAt
             tvTitle.text = currentItem.snippet.title
             tvDescription.text = currentItem.snippet.description
+
+            cardViewMain.setOnClickListener {
+                Log.d(TAG, "onBindViewHolder: ${currentItem.snippet.title}")
+
+              val gotoItem = Intent(mContext,PlaylistItemActivity::class.java)
+                gotoItem.putExtra("playlistId",currentItem.id.toString())
+                context.startActivity(gotoItem)
+            }
 
         }
     }

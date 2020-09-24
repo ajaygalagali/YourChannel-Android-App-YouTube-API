@@ -35,7 +35,9 @@ interface YtApi {
          @Query("playlistId")
          playlistId : String? = null,
          @Query("key")
-         api_key: String = API_KEY
+         api_key: String = API_KEY,
+         @Query("maxResults")
+         maxResults: Int? = 50
      ):Response<PlaylistItemsResponse>
 
 

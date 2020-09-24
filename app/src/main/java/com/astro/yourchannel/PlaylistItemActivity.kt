@@ -1,43 +1,50 @@
+
 package com.astro.yourchannel
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.astro.yourchannel.adapters.PlaylistItemAdapter
 import com.astro.yourchannel.adapters.YtAdapter
 import com.astro.yourchannel.repositories.YtRepository
 import com.astro.yourchannel.ui.YtViewModel
 import com.astro.yourchannel.ui.YtViewModelFactory
 import com.astro.yourchannel.util.YtResource
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_playlist_item.*
 
-class MainActivity : AppCompatActivity() {
+class PlaylistItemActivity : AppCompatActivity() {
+
+    private val TAG = "playlistItemActivity"
 
     lateinit var viewModel : YtViewModel
-    lateinit var mAdapter : YtAdapter
-
-    private  val TAG = "MainActivity"
+    lateinit var mAdapterItems : PlaylistItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_playlist_item)
+
+        val playListId = intent.getStringExtra("playlistId")
+        Toast.makeText(this,playListId,Toast.LENGTH_SHORT).show()
 
         val repository = YtRepository()
         val viewModelFactory = YtViewModelFactory(repository)
         viewModel = ViewModelProvider(this,viewModelFactory).get(YtViewModel::class.java)
 
-        Log.d(TAG, "onCreate: Settingup recycler view")
+        viewModel.getPlaylistItems(playListId)
+
         setupRecyclerView()
-        Log.d(TAG, "onCreate: Recycler set up completed")
-        viewModel.playlistsLiveData.observe(this, Observer {response ->
+        viewModel.playlistItemLiveData.observe(this, Observer {response ->
             when (response) {
                 is YtResource.Success -> {
                     hideProgressBar()
                     response.data?.let {
-                        mAdapter.differ.submitList(it.playlistsItem1s)
+                        mAdapterItems.differ.submitList(it.playlistItem2s)
                     }
                 }
 
@@ -54,28 +61,21 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
-
-
     }
-
     private fun hideProgressBar(){
-        progressBarMain.visibility = View.INVISIBLE
+        progressBarItems.visibility = View.INVISIBLE
     }
 
     private fun showProgressBar(){
-        progressBarMain.visibility = View.VISIBLE
+        progressBarItems.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView(){
-        mAdapter = YtAdapter(this)
+        mAdapterItems = PlaylistItemAdapter(this)
 
-        rvMain.apply {
-            adapter = mAdapter
+        rvItems.apply {
+            adapter = mAdapterItems
             layoutManager = LinearLayoutManager(applicationContext)
         }
     }
-
-
-
 }

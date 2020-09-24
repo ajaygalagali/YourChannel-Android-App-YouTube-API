@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.astro.yourchannel.models.playlistItem.PlaylistItemsResponse
 import com.astro.yourchannel.models.playlists.YtPlaylistsResponse
 import com.astro.yourchannel.repositories.YtRepository
 import com.astro.yourchannel.util.YtResource
@@ -16,6 +17,7 @@ class YtViewModel(
     private val TAG = "YtViewModel"
     
     val playlistsLiveData : MutableLiveData<YtResource<YtPlaylistsResponse>> = MutableLiveData()
+    val playlistItemLiveData : MutableLiveData<YtResource<PlaylistItemsResponse>> = MutableLiveData()
 
     init {
         getPlaylists()
@@ -27,6 +29,23 @@ class YtViewModel(
         Log.d(TAG, "getPlaylists: ${response.body()}")
         playlistsLiveData.postValue(handlePlaylistsResponse(response))
     }
+
+    fun getPlaylistItems(playlistId : String) = viewModelScope.launch {
+        playlistItemLiveData.postValue(YtResource.Loading())
+        val response = repository.getPlaylistItems(playlistId)
+        playlistItemLiveData.postValue(handlePlaylistItemResponse(response))
+    }
+
+    private fun handlePlaylistItemResponse(response : Response<PlaylistItemsResponse>) : YtResource<PlaylistItemsResponse>{
+        if(response.isSuccessful){
+            response.body()?.let {
+                return YtResource.Success(it)
+            }
+        }
+
+        return YtResource.Error(message = response.message())
+    }
+
 
     private fun handlePlaylistsResponse(response : Response<YtPlaylistsResponse>) : YtResource<YtPlaylistsResponse>{
         if(response.isSuccessful){
