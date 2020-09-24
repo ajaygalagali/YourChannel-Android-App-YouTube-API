@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.astro.yourchannel.R
 import com.astro.yourchannel.YtPlayerActivity
 import com.astro.yourchannel.models.playlistItem.PlaylistItem2
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.main_row.view.*
 import kotlinx.android.synthetic.main.main_row.view.tvDescription
 import kotlinx.android.synthetic.main.main_row.view.tvOverline
@@ -48,6 +49,12 @@ class PlaylistItemAdapter(val mContext : Context) : RecyclerView.Adapter<Playlis
             tvOverline.text = currentItem.snippet.publishedAt
             tvTitle.text = currentItem.snippet.title
             tvDescription.text = currentItem.snippet.description
+            try {
+                Glide.with(this).load(currentItem.snippet.thumbnails.medium.url).into(ivItemThumbnail)
+
+            }catch (e : Exception){
+                e.printStackTrace()
+            }
 
             cardViewItem.setOnClickListener {
                 Log.d(TAG, "onBindViewHolder: ${currentItem.snippet.resourceId.videoId}")
