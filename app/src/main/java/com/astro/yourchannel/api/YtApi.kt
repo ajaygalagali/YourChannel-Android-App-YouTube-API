@@ -1,7 +1,7 @@
 package com.astro.yourchannel.api
 
-import com.astro.yourchannel.Constants.Companion.API_KEY
-import com.astro.yourchannel.Constants.Companion.CHANNEL_ID
+import com.astro.yourchannel.util.Constants.Companion.API_KEY
+import com.astro.yourchannel.util.Constants.Companion.CHANNEL_ID
 import com.astro.yourchannel.models.playlistItem.PlaylistItemsResponse
 import com.astro.yourchannel.models.playlists.YtPlaylistsResponse
 import retrofit2.Response

@@ -12,4 +12,4 @@
 /captures
 .externalNativeBuild
 .cxx
-/app/src/main/java/com/astro/yourchannel/Constants.kt
+/app/src/main/java/com/astro/yourchannel/util/Constants.kt

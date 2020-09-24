@@ -1,7 +1,7 @@
 package com.astro.yourchannel.models.playlists
 
 
-data class Item(
+data class PlaylistsItem1(
     val etag: String,
     val id: String,
     val kind: String,
