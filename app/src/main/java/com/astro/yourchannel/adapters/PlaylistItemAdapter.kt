@@ -1,6 +1,7 @@
 package com.astro.yourchannel.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.astro.yourchannel.R
+import com.astro.yourchannel.YtPlayerActivity
 import com.astro.yourchannel.models.playlistItem.PlaylistItem2
 import kotlinx.android.synthetic.main.main_row.view.*
 import kotlinx.android.synthetic.main.main_row.view.tvDescription
@@ -35,7 +37,7 @@ class PlaylistItemAdapter(val mContext : Context) : RecyclerView.Adapter<Playlis
     val differ = AsyncListDiffer(this,differCallBack)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistItemViewHolder {
-        return PlaylistItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.main_row,parent,false))
+        return PlaylistItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.playlist_item_row,parent,false))
     }
 
     override fun onBindViewHolder(holder: PlaylistItemViewHolder, position: Int) {
@@ -49,6 +51,9 @@ class PlaylistItemAdapter(val mContext : Context) : RecyclerView.Adapter<Playlis
 
             cardViewItem.setOnClickListener {
                 Log.d(TAG, "onBindViewHolder: ${currentItem.snippet.resourceId.videoId}")
+                val gotoPlayer = Intent(mContext,YtPlayerActivity::class.java)
+                gotoPlayer.putExtra("videoId",currentItem.snippet.resourceId.videoId)
+                context.startActivity(gotoPlayer)
             }
 
         }

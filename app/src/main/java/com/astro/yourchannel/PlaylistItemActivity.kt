@@ -30,7 +30,9 @@ class PlaylistItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_playlist_item)
 
         val playListId = intent.getStringExtra("playlistId")
-        Toast.makeText(this,playListId,Toast.LENGTH_SHORT).show()
+        val playlistTitle = intent.getStringExtra("playlistTitle")
+
+        toolbarItem.title = playlistTitle
 
         val repository = YtRepository()
         val viewModelFactory = YtViewModelFactory(repository)
