@@ -2,10 +2,12 @@ package com.astro.yourchannel.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +15,6 @@ import com.astro.yourchannel.R
 import com.astro.yourchannel.YtPlayerActivity
 import com.astro.yourchannel.models.playlistItem.PlaylistItem2
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.main_row.view.*
-import kotlinx.android.synthetic.main.main_row.view.tvDescription
 import kotlinx.android.synthetic.main.main_row.view.tvOverline
 import kotlinx.android.synthetic.main.main_row.view.tvTitle
 import kotlinx.android.synthetic.main.playlist_item_row.view.*
@@ -41,6 +41,7 @@ class PlaylistItemAdapter(val mContext : Context) : RecyclerView.Adapter<Playlis
         return PlaylistItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.playlist_item_row,parent,false))
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onBindViewHolder(holder: PlaylistItemViewHolder, position: Int) {
         val currentItem = differ.currentList[position]
 
@@ -56,8 +57,8 @@ class PlaylistItemAdapter(val mContext : Context) : RecyclerView.Adapter<Playlis
                 e.printStackTrace()
             }
 
+
             cardViewItem.setOnClickListener {
-                Log.d(TAG, "onBindViewHolder: ${currentItem.snippet.resourceId.videoId}")
                 val gotoPlayer = Intent(mContext,YtPlayerActivity::class.java)
                 gotoPlayer.putExtra("videoId",currentItem.snippet.resourceId.videoId)
                 context.startActivity(gotoPlayer)
