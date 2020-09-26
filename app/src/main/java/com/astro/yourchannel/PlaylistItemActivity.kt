@@ -33,6 +33,9 @@ class PlaylistItemActivity : AppCompatActivity() {
         val playlistTitle = intent.getStringExtra("playlistTitle")
 
         toolbarItem.title = playlistTitle
+        toolbarItem.setNavigationOnClickListener {
+            finish()
+        }
 
         val repository = YtRepository()
         val viewModelFactory = YtViewModelFactory(repository)

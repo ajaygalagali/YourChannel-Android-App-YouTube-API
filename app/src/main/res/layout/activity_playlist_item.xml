@@ -39,6 +39,7 @@
             android:id="@+id/toolbarItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:navigationIcon="@drawable/ic_baseline_keyboard_arrow_left_24"
             app:title="Playlist Items" />
 
     </com.google.android.material.appbar.AppBarLayout>

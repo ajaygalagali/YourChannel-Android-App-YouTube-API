@@ -30,6 +30,7 @@ class YtPlayerActivity : YouTubeBaseActivity() {
 
                 youTubePlayer.loadVideo(videoId)
                 youTubePlayer.setShowFullscreenButton(false)
+                youTubePlayer.setFullscreen(true)
             }
 
             override fun onInitializationFailure(
