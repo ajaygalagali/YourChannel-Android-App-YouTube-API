@@ -4,6 +4,7 @@ import com.astro.yourchannel.util.Constants.Companion.API_KEY
 import com.astro.yourchannel.util.Constants.Companion.CHANNEL_ID
 import com.astro.yourchannel.models.playlistItem.PlaylistItemsResponse
 import com.astro.yourchannel.models.playlists.YtPlaylistsResponse
+import com.astro.yourchannel.models.searchItems.SearchItemsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -39,6 +40,18 @@ interface YtApi {
          @Query("maxResults")
          maxResults: Int? = 50
      ):Response<PlaylistItemsResponse>
+
+    @GET("v3/search")
+    suspend fun getSearchItems(
+        @Query("part")
+        part : String = "snippet",
+        @Query("key")
+        api_key: String = API_KEY,
+        @Query("type")
+        type : String = "channel",
+        @Query("q")
+        keyword : String? =null
+    ):Response<SearchItemsResponse>
 
 
 }

@@ -2,6 +2,7 @@ package com.astro.yourchannel.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.net.wifi.p2p.WifiP2pManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +15,9 @@ import com.astro.yourchannel.R
 import com.astro.yourchannel.models.playlists.PlaylistsItem1
 import kotlinx.android.synthetic.main.main_row.view.*
 
-class YtAdapter(mContext : Context) : RecyclerView.Adapter<YtAdapter.YtViewHolder>() {
+class YtAdapter() : RecyclerView.Adapter<YtAdapter.YtViewHolder>() {
 
     private val TAG = "YtAdapter"
-    private val mContext = mContext
 
     inner class YtViewHolder( itemView : View) : RecyclerView.ViewHolder(itemView)
 
@@ -48,12 +48,18 @@ class YtAdapter(mContext : Context) : RecyclerView.Adapter<YtAdapter.YtViewHolde
             tvDescription.text = currentItem.snippet.description
 
             cardViewMain.setOnClickListener {
-                Log.d(TAG, "onBindViewHolder: ${currentItem.snippet.title}")
+                /*Log.d(TAG, "onBindViewHolder: ${currentItem.snippet.title}")
 
               val gotoItem = Intent(mContext,PlaylistItemActivity::class.java)
                 gotoItem.putExtra("playlistId",currentItem.id)
                 gotoItem.putExtra("playlistTitle",currentItem.snippet.title)
-                context.startActivity(gotoItem)
+                context.startActivity(gotoItem)*/
+            }
+
+            setOnClickListener {
+                onItemClickListener?.let {
+                    it(currentItem)
+                }
             }
 
         }
@@ -62,4 +68,12 @@ class YtAdapter(mContext : Context) : RecyclerView.Adapter<YtAdapter.YtViewHolde
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
+
+    private var onItemClickListener:((PlaylistsItem1)->Unit)? = null
+
+    fun setOnItemClickListener(listener: (PlaylistsItem1) -> Unit){
+        onItemClickListener = listener
+    }
+
+
 }

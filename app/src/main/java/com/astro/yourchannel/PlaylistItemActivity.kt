@@ -39,11 +39,11 @@ class PlaylistItemActivity : AppCompatActivity() {
 
         val repository = YtRepository()
         val viewModelFactory = YtViewModelFactory(repository)
+
         viewModel = ViewModelProvider(this,viewModelFactory).get(YtViewModel::class.java)
-
         viewModel.getPlaylistItems(playListId)
-
         setupRecyclerView()
+
         viewModel.playlistItemLiveData.observe(this, Observer {response ->
             when (response) {
                 is YtResource.Success -> {
@@ -67,6 +67,7 @@ class PlaylistItemActivity : AppCompatActivity() {
         })
 
     }
+
     private fun hideProgressBar(){
         progressBarItems.visibility = View.INVISIBLE
     }

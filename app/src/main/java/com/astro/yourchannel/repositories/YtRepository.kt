@@ -11,4 +11,7 @@ class YtRepository {
     suspend fun getPlaylistItems(playlistId : String) =
         RetrofitInstance.api.getPlaylistItems(playlistId = playlistId)
 
+    suspend fun getSearchItems(keyword : String) =
+        RetrofitInstance.api.getSearchItems(keyword = keyword)
+
 }
