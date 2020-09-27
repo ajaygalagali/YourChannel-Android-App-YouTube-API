@@ -1,5 +1,7 @@
 package com.astro.yourchannel.models.playlists
 
+import java.io.Serializable
+
 
 data class Snippet(
     val channelId: String,
@@ -9,4 +11,4 @@ data class Snippet(
     val publishedAt: String,
     val thumbnails: Thumbnails,
     val title: String
-)
+):Serializable

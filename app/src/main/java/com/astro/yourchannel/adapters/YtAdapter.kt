@@ -1,16 +1,12 @@
 package com.astro.yourchannel.adapters
 
-import android.content.Context
-import android.content.Intent
-import android.net.wifi.p2p.WifiP2pManager
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.astro.yourchannel.PlaylistItemActivity
 import com.astro.yourchannel.R
 import com.astro.yourchannel.models.playlists.PlaylistsItem1
 import kotlinx.android.synthetic.main.main_row.view.*

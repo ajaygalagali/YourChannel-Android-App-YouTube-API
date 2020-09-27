@@ -57,6 +57,10 @@ class PlaylistItemAdapter() : RecyclerView.Adapter<PlaylistItemAdapter.PlaylistI
                 e.printStackTrace()
             }
 
+            imageView.setOnClickListener {
+                onItemClickListener?.let { it(currentItem) }
+            }
+
 
 
         }
@@ -64,5 +68,10 @@ class PlaylistItemAdapter() : RecyclerView.Adapter<PlaylistItemAdapter.PlaylistI
 
     override fun getItemCount(): Int {
         return differ.currentList.size
+    }
+    private var onItemClickListener:((PlaylistItem2)->Unit)? = null
+
+    fun setOnItemClickListener(listener:(PlaylistItem2) -> Unit){
+        onItemClickListener = listener
     }
 }

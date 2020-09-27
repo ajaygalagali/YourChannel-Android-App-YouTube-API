@@ -40,5 +40,7 @@
         <argument
             android:name="playlist"
             app:argType="com.astro.yourchannel.models.playlists.PlaylistsItem1" />
+
     </fragment>
+
 </navigation>
