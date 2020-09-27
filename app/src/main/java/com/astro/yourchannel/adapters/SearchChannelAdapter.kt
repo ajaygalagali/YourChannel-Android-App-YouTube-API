@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.astro.yourchannel.R
 import com.astro.yourchannel.models.searchItems.SearchItem
+import com.astro.yourchannel.models.searchItems.Snippet
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.search_channel_row.view.*
 import java.lang.Exception
@@ -55,6 +56,11 @@ class SearchChannelAdapter : RecyclerView.Adapter<SearchChannelAdapter.ChannelVi
             tvChannelTitle.text = currentItem.snippet.channelTitle
             tvChannelDescription.text = currentItem.snippet.description
 
+            ibAddChannel.setOnClickListener {
+                onItemClickListener?.let {
+                    it(currentItem.snippet)
+                }
+            }
 
         }
 
@@ -64,4 +70,10 @@ class SearchChannelAdapter : RecyclerView.Adapter<SearchChannelAdapter.ChannelVi
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
+
+    private var onItemClickListener:((Snippet)->Unit)? = null
+    fun setOnclickListener(listener : (Snippet)->Unit){
+        onItemClickListener = listener
+    }
+
 }

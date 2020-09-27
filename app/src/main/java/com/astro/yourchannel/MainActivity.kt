@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.astro.yourchannel.adapters.YtAdapter
+import com.astro.yourchannel.db.YtDatabase
 import com.astro.yourchannel.repositories.YtRepository
 import com.astro.yourchannel.ui.YtViewModel
 import com.astro.yourchannel.ui.YtViewModelFactory
@@ -24,7 +25,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModel : YtViewModel
-    lateinit var mAdapter : YtAdapter
 
     private  val TAG = "MainActivity"
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val repository = YtRepository()
+        val repository = YtRepository(YtDatabase(this))
         val viewModelFactory = YtViewModelFactory(repository)
 
         viewModel = ViewModelProvider(this,viewModelFactory).get(YtViewModel::class.java)

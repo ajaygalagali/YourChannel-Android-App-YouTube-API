@@ -1,7 +1,6 @@
 package com.astro.yourchannel.api
 
 import com.astro.yourchannel.util.Constants.Companion.API_KEY
-import com.astro.yourchannel.util.Constants.Companion.CHANNEL_ID
 import com.astro.yourchannel.models.playlistItem.PlaylistItemsResponse
 import com.astro.yourchannel.models.playlists.YtPlaylistsResponse
 import com.astro.yourchannel.models.searchItems.SearchItemsResponse
@@ -19,7 +18,7 @@ interface YtApi {
         @Query("part")
         part : String = "snippet",
         @Query("channelId")
-        channelId : String = CHANNEL_ID,
+        channelId : String? = null,
         @Query("key")
         api_key : String = API_KEY,
         @Query("maxResults")

@@ -12,7 +12,9 @@ import com.astro.yourchannel.R
 import com.astro.yourchannel.adapters.SearchChannelAdapter
 import com.astro.yourchannel.ui.YtViewModel
 import com.astro.yourchannel.util.YtResource
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.search_channel_row.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -46,6 +48,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
 
         }
+        
+        mAdapterSearch.setOnclickListener { 
+            viewModel.saveChannel(it)
+            Log.d(TAG, "onViewCreated: Channel Saved : ${it.channelTitle}")
+            Snackbar.make(view,"Channel saved successfully",Snackbar.LENGTH_LONG).show()
+        }
+
 
         viewModel.searchItemLiveData.observe(viewLifecycleOwner, Observer {
 

@@ -10,9 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.astro.yourchannel.MainActivity
 import com.astro.yourchannel.R
+import com.astro.yourchannel.adapters.ChannelListAdapter
+import com.astro.yourchannel.adapters.SearchChannelAdapter
 import com.astro.yourchannel.adapters.YtAdapter
 import com.astro.yourchannel.repositories.YtRepository
 import com.astro.yourchannel.ui.YtViewModel
@@ -20,70 +23,44 @@ import com.astro.yourchannel.ui.YtViewModelFactory
 import com.astro.yourchannel.util.YtResource
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_channel.*
+import kotlinx.android.synthetic.main.fragment_playlist.*
 
 class ChannelFragment : Fragment(R.layout.fragment_channel) {
 
-    lateinit var viewModel : YtViewModel
-    lateinit var mAdapter : YtAdapter
+    lateinit var viewModel: YtViewModel
+    lateinit var mAdapter: ChannelListAdapter
 
     val TAG = "ChannelFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        Log.d(TAG, "onCreate: Settingup recycler view")
         viewModel = (activity as MainActivity).viewModel
-
         setupRecyclerView()
 
-        mAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-//                putSerializable("")
-            }
-        }
-
-        Log.d(TAG, "onCreate: Recycler set up completed")
-        viewModel.playlistsLiveData.observe(viewLifecycleOwner, Observer {response ->
-            when (response) {
-                is YtResource.Success -> {
-                    hideProgressBar()
-                    response.data?.let {
-                        mAdapter.differ.submitList(it.playlistsItem1s)
-                    }
-                }
-
-                is YtResource.Error -> {
-                    hideProgressBar()
-                    response.message?.let {
-                        Log.d(TAG, "onCreate: $it")
-                    }
-                }
-
-                is YtResource.Loading -> {
-                    showProgressBar()
-                }
-            }
+        viewModel.getAllchannels().observe(viewLifecycleOwner, Observer {
+            mAdapter.differ.submitList(it)
         })
 
-    }
+        mAdapter.setOnItemClickListener {
+            viewModel.deleteChannel(it)
+        }
 
-    private fun hideProgressBar(){
-        progressBarChannel.visibility = View.INVISIBLE
-    }
+        mAdapter.setOnCardViewListener {
+            val bundle = Bundle().apply {
+                putSerializable("channel",it)
+            }
+            findNavController().navigate(R.id.action_channelFragment_to_playlistFragment, bundle)
+        }
 
-    private fun showProgressBar(){
-        progressBarChannel.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView(){
-        mAdapter = YtAdapter()
+        mAdapter = ChannelListAdapter()
 
         rvChannel.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
     }
-
-
 }

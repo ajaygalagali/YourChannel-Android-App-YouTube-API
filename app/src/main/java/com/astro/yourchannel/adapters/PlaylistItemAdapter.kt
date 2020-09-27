@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.main_row.view.tvOverline
 import kotlinx.android.synthetic.main.main_row.view.tvTitle
 import kotlinx.android.synthetic.main.playlist_item_row.view.*
 
-class PlaylistItemAdapter(val mContext : Context) : RecyclerView.Adapter<PlaylistItemAdapter.PlaylistItemViewHolder>() {
+class PlaylistItemAdapter() : RecyclerView.Adapter<PlaylistItemAdapter.PlaylistItemViewHolder>() {
 
     val TAG = "PlaylistItemAdapter"
 
@@ -58,11 +58,6 @@ class PlaylistItemAdapter(val mContext : Context) : RecyclerView.Adapter<Playlis
             }
 
 
-            cardViewItem.setOnClickListener {
-                val gotoPlayer = Intent(mContext,YtPlayerActivity::class.java)
-                gotoPlayer.putExtra("videoId",currentItem.snippet.resourceId.videoId)
-                context.startActivity(gotoPlayer)
-            }
 
         }
     }

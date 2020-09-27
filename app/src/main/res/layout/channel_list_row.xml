@@ -18,6 +18,8 @@
         app:cardUseCompatPadding="true"
         app:cardElevation="2dp"
 
+        android:id="@+id/cvChannel"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -43,7 +45,7 @@
 
                 android:text="Mortal"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/ibAddChannel"
+                app:layout_constraintEnd_toStartOf="@+id/ibDelChannel"
                 app:layout_constraintStart_toEndOf="@+id/ivChannelThumbnail"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,12 +59,12 @@
                 android:fontFamily="@font/montserrat_light"
                 android:maxLines="1"
                 android:text="Description"
-                app:layout_constraintEnd_toStartOf="@+id/ibAddChannel"
+                app:layout_constraintEnd_toStartOf="@+id/ibDelChannel"
                 app:layout_constraintStart_toEndOf="@+id/ivChannelThumbnail"
                 app:layout_constraintTop_toBottomOf="@+id/tvChannelTitle" />
 
             <ImageButton
-                android:id="@+id/ibAddChannel"
+                android:id="@+id/ibDelChannel"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:tint="@color/colorPrimary"
@@ -70,7 +72,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_add" />
+                app:srcCompat="@drawable/ic_del" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

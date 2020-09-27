@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_playlistFragment_to_videoListFragment"
             app:destination="@id/videoListFragment" />
+        <argument
+            android:name="channel"
+            app:argType="com.astro.yourchannel.models.searchItems.Snippet" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -33,5 +36,9 @@
         android:id="@+id/videoListFragment"
         android:name="com.astro.yourchannel.ui.fragments.VideoListFragment"
         android:label="fragment_video_list"
-        tools:layout="@layout/fragment_video_list" />
+        tools:layout="@layout/fragment_video_list" >
+        <argument
+            android:name="playlist"
+            app:argType="com.astro.yourchannel.models.playlists.PlaylistsItem1" />
+    </fragment>
 </navigation>

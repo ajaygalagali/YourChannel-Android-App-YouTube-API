@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.astro.yourchannel.models.playlistItem.PlaylistItemsResponse
 import com.astro.yourchannel.models.playlists.YtPlaylistsResponse
 import com.astro.yourchannel.models.searchItems.SearchItemsResponse
+import com.astro.yourchannel.models.searchItems.Snippet
 import com.astro.yourchannel.repositories.YtRepository
 import com.astro.yourchannel.util.YtResource
 import kotlinx.coroutines.launch
@@ -21,13 +22,9 @@ class YtViewModel(
     val playlistItemLiveData : MutableLiveData<YtResource<PlaylistItemsResponse>> = MutableLiveData()
     val searchItemLiveData : MutableLiveData<YtResource<SearchItemsResponse>> = MutableLiveData()
 
-    init {
-        getPlaylists()
-    }
-
-    fun getPlaylists() = viewModelScope.launch {
+    fun getPlaylists(channelId : String) = viewModelScope.launch {
         playlistsLiveData.postValue(YtResource.Loading())
-        val response  = repository.getPlaylists()
+        val response  = repository.getPlaylists(channelId = channelId)
         Log.d(TAG, "getPlaylists: ${response.body()}")
         playlistsLiveData.postValue(handlePlaylistsResponse(response))
     }
@@ -44,6 +41,18 @@ class YtViewModel(
         searchItemLiveData.postValue(handleSearchItemResponse(response))
 
     }
+
+    fun saveChannel(item : Snippet) = viewModelScope.launch {
+        repository.upsert(item)
+    }
+
+    fun deleteChannel(item: Snippet) = viewModelScope.launch {
+        repository.delete(item)
+    }
+
+    fun getAllchannels() = repository.getAllChannels()
+
+
 
     private fun handleSearchItemResponse(response : Response<SearchItemsResponse>) : YtResource<SearchItemsResponse>{
         if(response.isSuccessful){

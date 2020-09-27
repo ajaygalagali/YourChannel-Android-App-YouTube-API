@@ -48,19 +48,11 @@ class YtAdapter() : RecyclerView.Adapter<YtAdapter.YtViewHolder>() {
             tvDescription.text = currentItem.snippet.description
 
             cardViewMain.setOnClickListener {
-                /*Log.d(TAG, "onBindViewHolder: ${currentItem.snippet.title}")
-
-              val gotoItem = Intent(mContext,PlaylistItemActivity::class.java)
-                gotoItem.putExtra("playlistId",currentItem.id)
-                gotoItem.putExtra("playlistTitle",currentItem.snippet.title)
-                context.startActivity(gotoItem)*/
-            }
-
-            setOnClickListener {
                 onItemClickListener?.let {
                     it(currentItem)
                 }
             }
+
 
         }
     }
