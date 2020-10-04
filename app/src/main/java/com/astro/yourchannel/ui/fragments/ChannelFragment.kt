@@ -37,6 +37,7 @@ class ChannelFragment : Fragment(R.layout.fragment_channel) {
 
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
+        requireActivity().toolbarMain.title = getString(R.string.app_name)
 
         viewModel.getAllchannels().observe(viewLifecycleOwner, Observer {
             mAdapter.differ.submitList(it)
@@ -50,6 +51,7 @@ class ChannelFragment : Fragment(R.layout.fragment_channel) {
             val bundle = Bundle().apply {
                 putSerializable("channel",it)
             }
+
             findNavController().navigate(R.id.action_channelFragment_to_playlistFragment, bundle)
         }
 

@@ -18,6 +18,7 @@ import com.astro.yourchannel.adapters.PlaylistItemAdapter
 import com.astro.yourchannel.adapters.YtAdapter
 import com.astro.yourchannel.ui.YtViewModel
 import com.astro.yourchannel.util.YtResource
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_playlist.*
 import kotlinx.android.synthetic.main.fragment_video_list.*
 
@@ -34,6 +35,8 @@ class VideoListFragment : Fragment(R.layout.fragment_video_list) {
         super.onViewCreated(view, savedInstanceState)
 
         val currentPlaylist = args.playlist
+        requireActivity().toolbarMain.title = currentPlaylist.snippet.title
+
         viewModel = (activity as MainActivity).viewModel
 
         setupRecyclerView()

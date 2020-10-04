@@ -1,5 +1,6 @@
 package com.astro.yourchannel.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import com.astro.yourchannel.adapters.SearchChannelAdapter
 import com.astro.yourchannel.adapters.YtAdapter
 import com.astro.yourchannel.ui.YtViewModel
 import com.astro.yourchannel.util.YtResource
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_channel.*
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
@@ -26,7 +28,7 @@ class PlaylistFragment : Fragment(R.layout.fragment_playlist) {
     lateinit var mAdapter : YtAdapter
     private val TAG = "PlaylistFragment"
 
-    val args : PlaylistFragmentArgs by navArgs()
+    private val args : PlaylistFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,6 +46,8 @@ class PlaylistFragment : Fragment(R.layout.fragment_playlist) {
             findNavController().navigate(R.id.action_playlistFragment_to_videoListFragment,bundle)
         }
         val currentChannel = args.channel
+        requireActivity().toolbarMain.title = currentChannel.channelTitle
+
 
         viewModel.getPlaylists(currentChannel.channelId)
         viewModel.playlistsLiveData.observe(viewLifecycleOwner, Observer {response ->
@@ -88,5 +92,7 @@ class PlaylistFragment : Fragment(R.layout.fragment_playlist) {
             layoutManager = LinearLayoutManager(activity)
         }
     }
+
+
 
 }

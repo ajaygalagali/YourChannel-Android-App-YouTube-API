@@ -49,10 +49,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         }
         
-        mAdapterSearch.setOnclickListener { 
-            viewModel.saveChannel(it)
-            Log.d(TAG, "onViewCreated: Channel Saved : ${it.channelTitle}")
-            Snackbar.make(view,"Channel saved successfully",Snackbar.LENGTH_LONG).show()
+        mAdapterSearch.setOnclickListener { item->
+            viewModel.saveChannel(item)
+            Snackbar.make(view,"Channel saved successfully",Snackbar.LENGTH_SHORT).setAction("Undo"
+            ) {
+                viewModel.deleteChannel(item)
+            }.show()
         }
 
 
